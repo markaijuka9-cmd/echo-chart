@@ -10,6 +10,7 @@ from auth import router as auth_router
 from social import router as social_router
 from reels import router as reels_router
 from news import router as news_router
+from ai_routes import router as ai_router
 from database import Base, engine
 
 
@@ -33,6 +34,7 @@ app.include_router(auth_router)
 app.include_router(social_router)
 app.include_router(reels_router)
 app.include_router(news_router)
+app.include_router(ai_router)
 
 
 @app.get("/")
@@ -46,7 +48,4 @@ async def root():
 
 @app.get("/health")
 async def health():
-    return {
-        "status": "healthy",
-        "app": "EchoChat",
-    }
+    return {"status": "healthy"}
