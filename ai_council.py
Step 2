@@ -1,0 +1,43 @@
+
+import os
+
+import aiohttp
+
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
+LLAMA_API_KEY = os.getenv("LLAMA_API_KEY", "")
+
+AI_TIMEOUT_SECONDS = 20
+
+
+class CouncilRouter:
+    async def check_safety(self, message: str) -> bool:
+        """
+        Fail closed until a real safety provider is connected.
+        True means the message passed the safety check.
+        """
+        if not LLAMA_API_KEY:
+            return False
+
+        # Safety provider integration must be implemented and tested
+        # before messages can be approved.
+        return False
+
+    async def answer(self, message: str) -> str:
+        if not message.strip():
+            return "Please enter a message."
+
+        safe = await self.check_safety(message)
+
+        if not safe:
+            return (
+                "The AI safety service is not configured yet. "
+                "Please try again later."
+            )
+
+        # Model integrations will be added and tested next.
+        return "The AI response service is not connected yet."
+
+
+council = CouncilRouter()
